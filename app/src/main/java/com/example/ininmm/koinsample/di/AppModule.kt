@@ -11,21 +11,13 @@ import com.example.ininmm.koinsample.utils.IAppExecutors
 import org.koin.dsl.module.module
 
 val koinSampleModule = module {
-    // Presenter
-    factory<MainContract.Presenter> {
-            (view: MainContract.View) -> MainPresenter(get("repository"), view = view)
-    }
-
-    single<BookDataSource>(name = "repository", createOnStart = true) {
-        BookRepository(get("LocalData"), get("RemoteData"), get())
-    }
 
     single<IAppExecutors>(createOnStart = true) { AppExecutors() }
-
-
 }
 
 val koinApp = listOf(koinSampleModule,
+    presenterModule,
+    repositoryModule,
     localDataSourceModule,
     remoteDataSourceModule,
     roomModule)
